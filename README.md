@@ -2,7 +2,7 @@
 
 This repository is a collection of my **programming lab work** from my ongoing university academic journey.
 
-It is intended as a structured space to store lab exercises, practice problems, and solutions from different courses.
+It is intended as a structured space to store solutions of lab exercises from different courses.
 
 Currently, it includes lab work from my **3rd semester (Data Structures & Algorithms)**, and it will be updated as I progress through future semesters.
 
