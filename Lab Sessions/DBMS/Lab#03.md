@@ -44,3 +44,71 @@ TO_CHAR(
 ) AS REVIEW
 from hr.Employees;
 ```
+
+#### Q : Display the last name, hire date, and day of the week on which the employee started. Label the column DAY . Order the results by the day of the week starting with Monday.
+
+```
+SELECT last_name, hire_date ,
+TO_CHAR(hire_date,'Day') AS DAY
+FROM hr.EMPLOYEES
+ORDER BY TO_CHAR(hire_date,'D');
+```
+
+#### Q : Create a query that displays the employees’ last names and commission amounts. If an employee does not earn commission, put “No Commission.” Label the column COMM.
+
+```
+SELECT last_name, NVL(TO_CHAR(commission_pct), 'No Commision' ) AS "COMM"
+FROM hr.EMPLOYEES;
+```
+
+#### Q : Create a query that displays the employees’ last names and indicates the amounts of their annual salaries with asterisks. Each asterisk signifies a thousand dollars. Sort the data in descending order of salary. Label the column EMPLOYEES_AND_THEIR_SALARIES.
+
+```
+SELECT last_name , RPAD ('*', TRUNC(salary/ 1000), '*') AS "Employees_And _Their_ Salaries"
+FROM hr.EMPLOYEES
+ORDER BY salary DESC;
+```
+
+#### Q : Using the DECODE function, write a query that displays the grade of all employee s based on the value of the column JOB_ID , as per the following data:
+
+#### Job Grade
+
+#### A AD_PRES
+
+#### B ST_MAN
+
+#### C IT_PROG
+
+#### D SA_REP
+
+#### E ST_CLERK
+
+#### None of the above 0
+
+```
+SELECT last_name, job_id, DECODE(
+    job_id,
+    'AD_PRES','A',
+    'ST_MAN','B',
+    'IT_PROG','C',
+    'SA_REP','D',
+    'ST_CLERK','E',
+    '0'
+) AS GRADE
+FROM hr.EMPLOYEES
+```
+
+#### Q : Rewrite the statement in the preceding question using the CASE syntax.
+
+```
+SELECT last_name, job_id,
+CASE job_id
+        WHEN 'AD_PRES' THEN 'A'
+        WHEN 'ST_MAN' THEN 'B'
+        WHEN 'IT_PROG' THEN 'C'
+        WHEN 'SA_REP' THEN 'D'
+        WHEN 'ST_CLERK' THEN 'E'
+        ELSE '0'
+        END AS GRADE
+FROM hr.EMPLOYEES;
+```
