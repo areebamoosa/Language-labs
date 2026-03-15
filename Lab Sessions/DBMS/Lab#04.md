@@ -61,3 +61,60 @@ FROM hr.employees e
 JOIN hr.employees m
 ON e.manager_id = m.employee_id;
 ```
+
+#### Q7 : Display all employees including King, who has no manager. Order the results by the employee number.
+
+```
+SELECT e.last_name AS Employee , e.employee_id AS Emp# , m.last_name AS Manager , m.employee_id AS Mgr#
+FROM hr.EMPLOYEES e
+LEFT JOIN hr.EMPLOYEES m
+ON e.manager_id = m.EMPLOYEE_ID
+ORDER BY e.EMPLOYEE_ID;
+```
+
+#### Q8 : Create a query that displays employee last names, department numbers, and all the employees who work in the same department as a given employee. Give each column an appropriate label.
+
+```
+SELECT e.last_name AS "Employee",  e.department_id AS "Dept ID" , c.last_name AS "Colleague"
+FROM hr.EMPLOYEES e
+JOIN hr.EMPLOYEES c
+ON e.DEPARTMENT_ID = c.DEPARTMENT_ID
+WHERE e.last_name = 'King';
+```
+
+#### Q9 : Show the structure of the JOB_GRADES table. Create a query that displays the name, job, department name, salary, and grade for all employees.
+
+```
+DESCRIBE * job_grades;
+```
+
+```
+SELECT  e.last_name, e.job_id, d.department_name, e.salary, j.job_grades
+FROM hr.employees e
+JOIN hr.departments d
+ON e.department_id = d.department_id
+JOIN hr.jobs j
+ON e.salary BETWEEN j.min_salary AND j.max_salary;
+```
+
+#### Q10 : Create a query to display the name and hire date of any employee hired after employee Davies.
+
+```
+SELECT  e.last_name AS "Employee", e.hire_date AS "Hire Date"
+FROM hr.employees e
+WHERE e.hire_date > (
+    SELECT hire_date
+    FROM hr.employees
+    WHERE last_name = 'Davies'
+);
+```
+
+#### Q11 : Display the names and hire dates for all employees who were hire d before their managers, along with their manager’s names and hire dates. Label the columns Employee , Emp Hired , Manager , and Mgr Hired , respectively.
+
+```
+SELECT  e.last_name AS "Employee", e.hire_date AS "Emp Hired", m.last_name AS "Manager", m.hire_date AS "Mgr Hired"
+FROM hr.employees e
+JOIN hr.employees m
+ON e.manager_id = m.employee_id
+WHERE e.hire_date < m.hire_date;
+```
