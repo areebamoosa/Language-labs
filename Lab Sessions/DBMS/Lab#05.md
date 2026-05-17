@@ -73,7 +73,7 @@ ON d.department_id = e.department_id
 GROUP BY d.department_name, l.city;
 ```
 
-#### Q7: Create a query that will display the total number of employees a nd, of that total, the number of employees hired in 1995, 1996, 1997, and 1998. Create appropriate column headings.
+#### Q7: Create a query that will display the total number of employees and, of that total, the number of employees hired in 1995, 1996, 1997, and 1998. Create appropriate column headings.
 
 ```sql
 SELECT

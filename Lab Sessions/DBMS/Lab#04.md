@@ -12,11 +12,14 @@ ON e.department_id = d.department_id;
 #### Q2 : Create a unique listing of all jobs that are in department 30. Include the location of department 90 in the output.
 
 ```sql
-SELECT DISTINCT  e.job_id , d.location_id
-FROM hr.EMPLOYEES e
-JOIN hr.DEPARTMENTS d
-ON d.DEPARTMENT_ID = 90
-WHERE e.DEPARTMENT_ID = 30;
+SELECT DISTINCT e.job_id,
+       (SELECT l.city
+        FROM hr.departments d
+        JOIN hr.locations l
+        ON d.location_id = l.location_id
+        WHERE d.department_id = 90) AS location
+FROM hr.employees e
+WHERE e.department_id = 30;
 ```
 
 #### Q3 : Write a query to display the employee last name, department name, location ID, and city of all employees who earn a commission.
@@ -75,11 +78,14 @@ ORDER BY e.EMPLOYEE_ID;
 #### Q8 : Create a query that displays employee last names, department numbers, and all the employees who work in the same department as a given employee. Give each column an appropriate label.
 
 ```sql
-SELECT e.last_name AS "Employee",  e.department_id AS "Dept ID" , c.last_name AS "Colleague"
-FROM hr.EMPLOYEES e
-JOIN hr.EMPLOYEES c
-ON e.DEPARTMENT_ID = c.DEPARTMENT_ID
-WHERE e.last_name = 'King';
+SELECT
+    e.last_name AS "Employee",
+    e.department_id AS "Dept ID",
+    c.last_name AS "Colleague"
+FROM hr.employees e
+JOIN hr.employees c
+ON e.department_id = c.department_id
+ORDER BY e.department_id, e.last_name, c.last_name;
 ```
 
 #### Q9 : Show the structure of the JOB_GRADES table. Create a query that displays the name, job, department name, salary, and grade for all employees.
@@ -89,7 +95,7 @@ DESCRIBE * job_grades;
 ```
 
 ```sql
-SELECT  e.last_name, e.job_id, d.department_name, e.salary, j.job_grades
+SELECT  e.last_name, e.job_id, e.salary ,d.department_name, j.job_grades
 FROM hr.employees e
 JOIN hr.departments d
 ON e.department_id = d.department_id
@@ -109,7 +115,7 @@ WHERE e.hire_date > (
 );
 ```
 
-#### Q11 : Display the names and hire dates for all employees who were hire d before their managers, along with their manager’s names and hire dates. Label the columns Employee , Emp Hired , Manager , and Mgr Hired , respectively.
+#### Q11 : Display the names and hire dates for all employees who were hired before their managers, along with their manager’s names and hire dates. Label the columns Employee , Emp Hired , Manager , and Mgr Hired , respectively.
 
 ```sql
 SELECT  e.last_name AS "Employee", e.hire_date AS "Emp Hired", m.last_name AS "Manager", m.hire_date AS "Mgr Hired"
